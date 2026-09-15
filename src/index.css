@@ -1,0 +1,148 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+/* Premium Gradient Scrollbar */
+::-webkit-scrollbar {
+  width: 9px;
+}
+::-webkit-scrollbar-track {
+  background: #0f172a;
+}
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(to bottom, #0ea5e9, #2563eb);
+  border-radius: 6px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(to bottom, #38bdf8, #1d4ed8);
+}
+
+/* Button Shimmer Overlay Effect */
+.btn-shimmer {
+  position: relative;
+  overflow: hidden;
+}
+.btn-shimmer::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    60deg,
+    transparent 30%,
+    rgba(255, 255, 255, 0.25) 50%,
+    transparent 70%
+  );
+  transform: rotate(30deg) translateX(-100%);
+  transition: transform 0.8s ease;
+}
+.btn-shimmer:hover::after {
+  transform: rotate(30deg) translateX(100%);
+}
+
+/* Glassmorphism Card Style */
+.glass-card {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(226, 232, 240, 0.8);
+}
+
+.glass-card-dark {
+  background: rgba(15, 23, 42, 0.85);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(30, 58, 138, 0.4);
+}
+
+/* Water Ripple pulse */
+@keyframes rippleEffect {
+  0% {
+    box-shadow: 0 0 0 0 rgba(6, 182, 212, 0.4), 0 0 0 10px rgba(6, 182, 212, 0.2);
+  }
+  100% {
+    box-shadow: 0 0 0 15px rgba(6, 182, 212, 0), 0 0 0 30px rgba(6, 182, 212, 0);
+  }
+}
+
+.animate-ripple {
+  animation: rippleEffect 2.5s infinite;
+}
+
+/* Realistic 3D Liquid Water Droplet Styles */
+.realistic-water-drop {
+  position: absolute;
+  top: -40px;
+  background: radial-gradient(
+    ellipse at 35% 25%,
+    rgba(255, 255, 255, 0.98) 0%,
+    rgba(186, 230, 253, 0.8) 25%,
+    rgba(56, 189, 248, 0.55) 60%,
+    rgba(2, 132, 199, 0.9) 100%
+  );
+  border-radius: 50% 50% 70% 70% / 40% 40% 80% 80%;
+  box-shadow: 
+    inset -1.5px -2px 4px rgba(3, 105, 161, 0.75),
+    inset 1.5px 2px 4px rgba(255, 255, 255, 0.95),
+    0 4px 12px rgba(14, 165, 233, 0.35);
+  backdrop-filter: blur(1px);
+  -webkit-backdrop-filter: blur(1px);
+}
+
+.realistic-water-drop::before {
+  content: '';
+  position: absolute;
+  top: 14%;
+  left: 20%;
+  width: 35%;
+  height: 25%;
+  background: #ffffff;
+  border-radius: 50%;
+  filter: blur(0.3px);
+  opacity: 0.95;
+}
+
+.realistic-water-drop::after {
+  content: '';
+  position: absolute;
+  bottom: 12%;
+  right: 20%;
+  width: 22%;
+  height: 16%;
+  background: rgba(255, 255, 255, 0.75);
+  border-radius: 50%;
+  filter: blur(0.5px);
+}
+
+@keyframes realisticDropFall {
+  0% {
+    transform: translateY(-40px) scale(0.8) rotate(0deg);
+    opacity: 0;
+  }
+  8% {
+    opacity: 0.95;
+  }
+  50% {
+    transform: translateY(50vh) scale(1) rotate(1.5deg);
+  }
+  90% {
+    opacity: 0.95;
+  }
+  100% {
+    transform: translateY(112vh) scale(1.1) rotate(-1.5deg);
+    opacity: 0;
+  }
+}
+
+.animate-realisticDrop {
+  animation: realisticDropFall linear infinite;
+}
+

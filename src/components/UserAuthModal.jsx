@@ -38,39 +38,26 @@ export default function UserAuthModal({ isOpen, onClose, onSuccess, initialMode 
     setError('');
 
     try {
-      if (mode === 'login') {
-        const res = await fetch('/api/users/login', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            emailOrPhone: formData.email || formData.phone,
-            password: formData.password
-          })
-        });
-        const data = await res.json();
-        if (data.success) {
-          localStorage.setItem('customerToken', data.token);
-          localStorage.setItem('customerUser', JSON.stringify(data.user));
-          if (onSuccess) onSuccess(data.user);
-          onClose();
-        } else {
-          setError(data.message || 'Login failed. Please check your credentials.');
-        }
+      const endpoint = mode === 'login' ? '/api/users/login' : '/api/users/register';
+      const bodyPayload = mode === 'login' 
+        ? { emailOrPhone: formData.email || formData.phone, password: formData.password }
+        : formData;
+
+      const res = await fetch(endpoint, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(bodyPayload)
+      });
+
+      const data = await res.json().catch(() => ({}));
+
+      if (res.ok && data.success) {
+        localStorage.setItem('customerToken', data.token);
+        localStorage.setItem('customerUser', JSON.stringify(data.user));
+        if (onSuccess) onSuccess(data.user);
+        onClose();
       } else {
-        const res = await fetch('/api/users/register', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(formData)
-        });
-        const data = await res.json();
-        if (data.success) {
-          localStorage.setItem('customerToken', data.token);
-          localStorage.setItem('customerUser', JSON.stringify(data.user));
-          if (onSuccess) onSuccess(data.user);
-          onClose();
-        } else {
-          setError(data.message || 'Registration failed. Please try again.');
-        }
+        setError(data.message || (mode === 'login' ? 'Login failed. Please check your credentials.' : 'Registration failed. Please try again.'));
       }
     } catch (err) {
       setError('Connection error. Could not connect to backend server.');

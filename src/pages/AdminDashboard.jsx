@@ -56,13 +56,6 @@ export default function AdminDashboard() {
     inStock: true
   });
 
-  // Quick fill helper for admin login
-  const fillDemoCredentials = () => {
-    setUsername('admin');
-    setPassword('admin123');
-    setLoginError('');
-  };
-
   useEffect(() => {
     const token = localStorage.getItem('adminToken');
     const storedUser = localStorage.getItem('adminUser');
@@ -315,7 +308,7 @@ export default function AdminDashboard() {
             </div>
           )}
 
-          <form onSubmit={handleLogin} className="space-y-5">
+          <form onSubmit={handleLogin} className="space-y-5" autoComplete="off">
             <div>
               <label className="block text-xs font-semibold text-slate-300 mb-1.5 uppercase tracking-wider">Admin Username</label>
               <div className="relative">
@@ -326,6 +319,7 @@ export default function AdminDashboard() {
                   onChange={(e) => setUsername(e.target.value)}
                   placeholder="Enter admin username"
                   className="w-full bg-slate-950 border border-slate-800 focus:border-cyanGlow-500 rounded-xl py-3 pl-10 pr-4 text-white text-sm outline-none transition"
+                  autoComplete="off"
                   required
                 />
               </div>
@@ -341,6 +335,7 @@ export default function AdminDashboard() {
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="Enter admin password"
                   className="w-full bg-slate-950 border border-slate-800 focus:border-cyanGlow-500 rounded-xl py-3 pl-10 pr-4 text-white text-sm outline-none transition"
+                  autoComplete="new-password"
                   required
                 />
               </div>
@@ -349,17 +344,9 @@ export default function AdminDashboard() {
             <button
               type="submit"
               disabled={loginLoading}
-              className="w-full bg-gradient-to-r from-cyanGlow-500 to-sapphire-600 hover:from-cyanGlow-400 hover:to-sapphire-500 text-white font-bold py-3.5 rounded-xl transition text-sm shadow-glow-cyan flex items-center justify-center gap-2"
+              className="w-full bg-gradient-to-r from-cyanGlow-500 to-sapphire-600 hover:from-cyanGlow-400 hover:to-sapphire-500 text-white font-bold py-3.5 rounded-xl transition text-sm shadow-glow-cyan flex items-center justify-center gap-2 cursor-pointer"
             >
               {loginLoading ? 'Authenticating...' : 'Sign In to Admin Dashboard'}
-            </button>
-
-            <button
-              type="button"
-              onClick={fillDemoCredentials}
-              className="w-full bg-slate-800/60 hover:bg-slate-800 text-slate-400 hover:text-slate-200 text-xs font-medium py-2 rounded-lg transition border border-slate-800"
-            >
-              Auto-fill Credentials (admin / admin123)
             </button>
           </form>
         </div>

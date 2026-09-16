@@ -44,7 +44,7 @@ export default function Gallery({ onOpenOrder }) {
       id: 6,
       title: '1L Bottle Packaging & Sealing',
       category: 'bottling',
-      image: '/images/products-hero.jpg',
+      image: '/images/bottle-500ml.png',
       desc: 'Hygienic touchless bottling for events and conferences.'
     }
   ];

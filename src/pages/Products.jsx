@@ -85,7 +85,7 @@ export default function Products({ onOpenOrder, onOpenCallback }) {
         { label: 'Certification', val: 'ISI Marked & FSSAI Approved' }
       ],
       ideal: 'Conferences, Marriages & Functions',
-      image: '/images/products-hero.jpg',
+      image: '/images/bottle-500ml.png',
       popular: true
     },
     {
@@ -170,7 +170,7 @@ export default function Products({ onOpenOrder, onOpenCallback }) {
         { label: 'Cap Type', val: 'Includes 28mm Tamper-Evident Screw Caps' }
       ],
       ideal: 'Bottling Plants, Water Suppliers & B2B Retailers',
-      image: '/images/products-hero.jpg',
+      image: '/images/bottle-500ml.png',
       popular: true
     },
     {

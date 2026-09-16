@@ -1,21 +1,36 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { 
   X, CheckCircle2, ShoppingBag, Truck, AlertCircle, Loader2, 
-  CreditCard, QrCode, Banknote, ShieldCheck, Sparkles, Building2 
+  CreditCard, QrCode, Banknote, ShieldCheck, Sparkles, Building2, User, LogIn 
 } from 'lucide-react';
 
-export default function OrderModal({ isOpen, onClose, selectedProductDefault = '20 Litre Premium Water Can (Filled)' }) {
+export default function OrderModal({ isOpen, onClose, selectedProductDefault = '20 Litre Premium Water Can (Filled)', currentUser, onRequireAuth }) {
   const [formData, setFormData] = useState({
-    name: '',
-    phone: '',
-    address: '',
-    pincode: '641045',
+    name: currentUser?.name || '',
+    phone: currentUser?.phone || '',
+    address: currentUser?.address || '',
+    pincode: currentUser?.pincode || '641045',
     product: selectedProductDefault,
     quantity: 1,
     paymentMode: 'upi',
     deliveryTimeSlot: 'ASAP (Next 1-2 Hours)',
     notes: ''
   });
+
+  useEffect(() => {
+    if (currentUser) {
+      setFormData(prev => ({
+        ...prev,
+        name: currentUser.name || prev.name,
+        phone: currentUser.phone || prev.phone,
+        address: currentUser.address || prev.address,
+        pincode: currentUser.pincode || prev.pincode,
+        product: selectedProductDefault
+      }));
+    } else {
+      setFormData(prev => ({ ...prev, product: selectedProductDefault }));
+    }
+  }, [currentUser, selectedProductDefault]);
 
   const [loading, setLoading] = useState(false);
   const [submittedOrder, setSubmittedOrder] = useState(null);
@@ -50,6 +65,13 @@ export default function OrderModal({ isOpen, onClose, selectedProductDefault = '
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (!currentUser) {
+      setError('You must sign in to place an order and track your delivery status.');
+      if (onRequireAuth) onRequireAuth();
+      return;
+    }
+
     if (!formData.name || !formData.phone || !formData.address || !formData.pincode) {
       setError('Please fill in all required fields marked with *');
       return;
@@ -60,6 +82,8 @@ export default function OrderModal({ isOpen, onClose, selectedProductDefault = '
 
     const payload = {
       ...formData,
+      userId: currentUser?.id || '',
+      userEmail: currentUser?.email || '',
       unitPrice: currentUnitPrice,
       subtotal,
       gstAmount,
@@ -176,6 +200,25 @@ export default function OrderModal({ isOpen, onClose, selectedProductDefault = '
             </div>
           ) : (
             <form onSubmit={handleSubmit} className="space-y-2.5">
+              {!currentUser && (
+                <div className="p-3 bg-amber-50 border-2 border-amber-300 rounded-xl text-xs text-slate-800 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2">
+                  <div className="flex items-center gap-2">
+                    <User className="w-5 h-5 text-amber-600 shrink-0" />
+                    <div>
+                      <p className="font-bold text-slate-900">Sign in to Track Delivery</p>
+                      <p className="text-[11px] text-slate-600">Please sign in to place your order and monitor live dispatch updates.</p>
+                    </div>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={onRequireAuth}
+                    className="px-3.5 py-1.5 bg-slate-950 hover:bg-slate-800 text-amber-400 font-bold rounded-lg text-xs transition flex items-center gap-1 shrink-0 shadow-md"
+                  >
+                    <LogIn className="w-3.5 h-3.5" /> Sign In / Register
+                  </button>
+                </div>
+              )}
+
               {error && (
                 <div className="p-2 bg-rose-50 border-2 border-rose-300 rounded-xl text-xs font-bold text-rose-800 flex items-center gap-2">
                   <AlertCircle className="w-4 h-4 shrink-0 text-rose-600" />
@@ -188,7 +231,7 @@ export default function OrderModal({ isOpen, onClose, selectedProductDefault = '
                 <label className="block text-[11px] font-black text-slate-950 uppercase tracking-wider">Select Water Can or Bottle Size *</label>
                 <div className="flex items-center gap-2.5 bg-slate-50 p-1.5 rounded-xl border-2 border-slate-300">
                   <img 
-                    src={formData.product.includes('500 ml') || formData.product.includes('500ml') ? '/images/bottle-500ml.png' : formData.product.includes('2 Litre') || formData.product.includes('2L') ? '/images/can-2l.png' : formData.product.includes('5') && !formData.product.includes('20') ? '/images/can-5l.png' : formData.product.includes('20') ? '/images/can-20l.png' : 'https://images.unsplash.com/photo-1523362628745-0c100150b504?auto=format&fit=crop&q=80&w=300'} 
+                    src={formData.product.includes('500 ml') || formData.product.includes('500ml') ? '/images/bottle-500ml.png' : formData.product.includes('2 Litre') || formData.product.includes('2L') ? '/images/can-2l.png' : formData.product.includes('5') && !formData.product.includes('20') ? '/images/can-5l.png' : formData.product.includes('20') ? '/images/can-20l.png' : '/images/products-hero.jpg'} 
                     alt={formData.product} 
                     className="w-10 h-10 object-contain bg-white p-1 rounded-lg border-2 border-slate-200 shadow-sm shrink-0"
                   />
@@ -299,12 +342,12 @@ export default function OrderModal({ isOpen, onClose, selectedProductDefault = '
                     onClick={() => setFormData({ ...formData, paymentMode: 'upi' })}
                     className={`py-2 px-2 rounded-lg text-[11px] font-black flex flex-col items-center gap-1 border-2 transition cursor-pointer ${
                       formData.paymentMode === 'upi'
-                        ? 'bg-blue-600 border-blue-700 text-white shadow-md ring-2 ring-blue-500'
+                        ? 'bg-amber-400 border-amber-500 text-slate-950 shadow-md scale-[1.02]'
                         : 'bg-slate-100 border-slate-300 text-slate-800 hover:bg-slate-200'
                     }`}
                   >
-                    <QrCode className="w-4 h-4" />
-                    <span>UPI / QR</span>
+                    <QrCode className="w-4 h-4 text-slate-950" />
+                    <span>UPI / GPay / QR</span>
                   </button>
 
                   <button
@@ -312,12 +355,12 @@ export default function OrderModal({ isOpen, onClose, selectedProductDefault = '
                     onClick={() => setFormData({ ...formData, paymentMode: 'card' })}
                     className={`py-2 px-2 rounded-lg text-[11px] font-black flex flex-col items-center gap-1 border-2 transition cursor-pointer ${
                       formData.paymentMode === 'card'
-                        ? 'bg-blue-600 border-blue-700 text-white shadow-md ring-2 ring-blue-500'
+                        ? 'bg-blue-600 border-blue-700 text-white shadow-md scale-[1.02]'
                         : 'bg-slate-100 border-slate-300 text-slate-800 hover:bg-slate-200'
                     }`}
                   >
-                    <CreditCard className="w-4 h-4" />
-                    <span>Card / Netbanking</span>
+                    <CreditCard className={`w-4 h-4 ${formData.paymentMode === 'card' ? 'text-white' : 'text-slate-800'}`} />
+                    <span>Card / Netbank</span>
                   </button>
 
                   <button
@@ -325,11 +368,11 @@ export default function OrderModal({ isOpen, onClose, selectedProductDefault = '
                     onClick={() => setFormData({ ...formData, paymentMode: 'cod' })}
                     className={`py-2 px-2 rounded-lg text-[11px] font-black flex flex-col items-center gap-1 border-2 transition cursor-pointer ${
                       formData.paymentMode === 'cod'
-                        ? 'bg-amber-400 border-amber-500 text-slate-950 shadow-md ring-2 ring-amber-400'
+                        ? 'bg-emerald-500 border-emerald-600 text-slate-950 shadow-md scale-[1.02]'
                         : 'bg-slate-100 border-slate-300 text-slate-800 hover:bg-slate-200'
                     }`}
                   >
-                    <Banknote className="w-4 h-4" />
+                    <Banknote className={`w-4 h-4 ${formData.paymentMode === 'cod' ? 'text-slate-950' : 'text-slate-800'}`} />
                     <span>Cash on Delivery</span>
                   </button>
                 </div>
@@ -355,7 +398,13 @@ export default function OrderModal({ isOpen, onClose, selectedProductDefault = '
                 <button
                   type="submit"
                   disabled={loading}
-                  className="w-full bg-amber-400 hover:bg-amber-300 text-slate-950 font-black py-2.5 sm:py-3 rounded-xl shadow-lg hover:shadow-xl transition-all border-2 border-amber-500 flex items-center justify-center gap-2 text-sm uppercase tracking-wider cursor-pointer"
+                  className={`w-full font-black py-2.5 sm:py-3 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 border-2 flex items-center justify-center gap-2 text-sm uppercase tracking-wider cursor-pointer ${
+                    formData.paymentMode === 'upi'
+                      ? 'bg-amber-400 hover:bg-amber-300 text-slate-950 border-amber-500 shadow-amber-400/20'
+                      : formData.paymentMode === 'card'
+                      ? 'bg-blue-600 hover:bg-blue-500 text-white border-blue-700 shadow-blue-600/20'
+                      : 'bg-emerald-500 hover:bg-emerald-400 text-slate-950 border-emerald-600 shadow-emerald-500/20'
+                  }`}
                 >
                   {loading ? (
                     <>
@@ -363,7 +412,7 @@ export default function OrderModal({ isOpen, onClose, selectedProductDefault = '
                     </>
                   ) : (
                     <>
-                      <Truck className="w-4 h-4 text-slate-950" /> Confirm Order (Pay ₹{grandTotal})
+                      <Truck className={`w-4 h-4 ${formData.paymentMode === 'card' ? 'text-white' : 'text-slate-950'}`} /> Confirm Order (Pay ₹{grandTotal})
                     </>
                   )}
                 </button>

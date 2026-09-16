@@ -10,7 +10,7 @@ export default function PurificationProcess() {
       title: 'Dual Sand & Quartz Filter',
       short: 'Coarse Filtration',
       icon: Filter,
-      image: 'https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&q=80&w=600',
+      image: '/images/step-2-carbon.jpg',
       description: 'Removes visible suspended particles, dust, silt, and heavy turbidity using high-density silica sand and micro-quartz beds.',
       benefit: 'Clears raw water clarity to 99.9%'
     },
@@ -28,7 +28,7 @@ export default function PurificationProcess() {
       title: 'Micro Micron Filtration (5µm)',
       short: 'Fine Sediment Filter',
       icon: Activity,
-      image: 'https://images.unsplash.com/photo-1548839140-29a749e1bc4e?auto=format&fit=crop&q=80&w=600',
+      image: '/images/purity-glass.jpg',
       description: 'Traps ultra-fine particles down to 5 microns ensuring crystal clear water before entering high pressure RO membranes.',
       benefit: 'Protects RO membrane longevity'
     },
@@ -37,7 +37,7 @@ export default function PurificationProcess() {
       title: 'High Pressure Reverse Osmosis (RO)',
       short: 'TDS & Heavy Metal Elimination',
       icon: ShieldCheck,
-      image: 'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&q=80&w=600',
+      image: '/images/step-6-ozone.jpg',
       description: 'Forces water through semi-permeable membranes (0.0001 micron) removing 99%+ dissolved salts, lead, mercury, arsenic, and nitrates.',
       benefit: 'Optimum TDS balancing for daily consumption'
     },
@@ -46,7 +46,7 @@ export default function PurificationProcess() {
       title: 'UV Sterilization Chamber',
       short: 'Germicidal UV Disinfection',
       icon: Sun,
-      image: 'https://images.unsplash.com/photo-1579154204601-01588f351e67?auto=format&fit=crop&q=80&w=600',
+      image: '/images/about-hero.jpg',
       description: 'Exposes water to high-intensity germicidal UV-C light (254 nm), neutralizing 99.99% of bacteria, viruses, and pathogens.',
       benefit: '100% Pathogen-free biological safety'
     },
@@ -64,7 +64,7 @@ export default function PurificationProcess() {
       title: 'Automated Hygienic Can Washing & Bottling',
       short: 'No-Touch Touchless Packing',
       icon: CheckCircle2,
-      image: 'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&q=80&w=600',
+      image: '/images/event-bulk-cans.jpg',
       description: 'Cans undergo 5-stage automated inner/outer hot water & ozonated wash before instant robotic filling and tamper-proof sealing.',
       benefit: 'Zero human touch contact guarantee'
     }
@@ -85,11 +85,10 @@ export default function PurificationProcess() {
         </p>
       </div>
 
-      {/* Interactive 7-Stage Selector Grid (Zero Clipping & Full Step 1 Visibility) */}
+      {/* Interactive 7-Stage Selector Grid */}
       <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-2 sm:gap-2.5 mb-8 relative z-10">
         {stages.map((stg, idx) => {
           const isActive = activeStage === idx;
-          const isFirst = stg.step === 1;
           return (
             <button
               key={stg.step}
@@ -97,8 +96,6 @@ export default function PurificationProcess() {
               className={`p-2.5 sm:p-3 rounded-2xl flex flex-col items-start gap-1.5 transition-all duration-200 border-2 cursor-pointer text-left w-full ${
                 isActive
                   ? 'bg-amber-400 text-slate-950 font-black shadow-xl border-amber-500 scale-[1.02]'
-                  : isFirst
-                  ? 'bg-slate-900 text-amber-300 hover:bg-slate-800 border-amber-400 font-black shadow-md'
                   : 'bg-slate-900 text-slate-200 hover:bg-slate-800 hover:text-white border-slate-800 font-bold'
               }`}
             >
@@ -106,23 +103,14 @@ export default function PurificationProcess() {
                 <span className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-black shrink-0 ${
                   isActive 
                     ? 'bg-slate-950 text-amber-400' 
-                    : isFirst 
-                    ? 'bg-amber-400 text-slate-950' 
                     : 'bg-slate-800 text-slate-200'
                 }`}>
                   {stg.step}
                 </span>
-                {isFirst && (
-                  <span className={`text-[9px] font-black uppercase px-1.5 py-0.5 rounded ${
-                    isActive ? 'bg-slate-950 text-amber-400' : 'bg-amber-400 text-slate-950'
-                  }`}>
-                    STEP 1
-                  </span>
-                )}
               </div>
-              <p className="text-[11px] sm:text-xs font-black leading-tight mt-0.5">
+              <span className="text-xs font-bold leading-tight line-clamp-2">
                 {stg.short}
-              </p>
+              </span>
             </button>
           );
         })}

@@ -302,9 +302,9 @@ export default function EventBooking({ onOpenOrder, onOpenCallback }) {
                   <button
                     type="button"
                     onClick={() => setContactForm({ ...contactForm, paymentMode: 'upi' })}
-                    className={`p-3.5 rounded-xl text-xs font-black flex flex-col items-center gap-1.5 border-2 transition ${
+                    className={`p-3.5 rounded-xl text-xs font-black flex flex-col items-center gap-1.5 border-2 transition cursor-pointer ${
                       contactForm.paymentMode === 'upi'
-                        ? 'bg-amber-400 text-slate-950 border-amber-500 shadow-md scale-[1.02]'
+                        ? 'bg-amber-400 text-slate-950 border-amber-500 shadow-lg shadow-amber-400/30 scale-[1.02]'
                         : 'bg-slate-100 border-slate-300 text-slate-900 hover:bg-slate-200'
                     }`}
                   >
@@ -315,26 +315,26 @@ export default function EventBooking({ onOpenOrder, onOpenCallback }) {
                   <button
                     type="button"
                     onClick={() => setContactForm({ ...contactForm, paymentMode: 'card' })}
-                    className={`p-3.5 rounded-xl text-xs font-black flex flex-col items-center gap-1.5 border-2 transition ${
+                    className={`p-3.5 rounded-xl text-xs font-black flex flex-col items-center gap-1.5 border-2 transition cursor-pointer ${
                       contactForm.paymentMode === 'card'
-                        ? 'bg-blue-700 text-white border-blue-900 shadow-md scale-[1.02]'
+                        ? 'bg-blue-600 text-white border-blue-700 shadow-lg shadow-blue-500/30 scale-[1.02]'
                         : 'bg-slate-100 border-slate-300 text-slate-900 hover:bg-slate-200'
                     }`}
                   >
-                    <CreditCard className="w-6 h-6 text-white" />
+                    <CreditCard className={`w-6 h-6 ${contactForm.paymentMode === 'card' ? 'text-white' : 'text-slate-900'}`} />
                     <span>Card / Netbank</span>
                   </button>
 
                   <button
                     type="button"
                     onClick={() => setContactForm({ ...contactForm, paymentMode: 'cod' })}
-                    className={`p-3.5 rounded-xl text-xs font-black flex flex-col items-center gap-1.5 border-2 transition ${
+                    className={`p-3.5 rounded-xl text-xs font-black flex flex-col items-center gap-1.5 border-2 transition cursor-pointer ${
                       contactForm.paymentMode === 'cod'
-                        ? 'bg-green-600 text-white border-green-800 shadow-md scale-[1.02]'
+                        ? 'bg-emerald-500 text-slate-950 border-emerald-600 shadow-lg shadow-emerald-500/30 scale-[1.02]'
                         : 'bg-slate-100 border-slate-300 text-slate-900 hover:bg-slate-200'
                     }`}
                   >
-                    <Banknote className="w-6 h-6 text-white" />
+                    <Banknote className={`w-6 h-6 ${contactForm.paymentMode === 'cod' ? 'text-slate-950' : 'text-slate-900'}`} />
                     <span>Cash on Delivery</span>
                   </button>
                 </div>
@@ -367,9 +367,22 @@ export default function EventBooking({ onOpenOrder, onOpenCallback }) {
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full bg-amber-400 hover:bg-amber-300 text-slate-950 font-black py-4 rounded-xl shadow-xl transition text-base flex items-center justify-center gap-2 uppercase tracking-wide border-2 border-amber-500 cursor-pointer"
+                className={`w-full font-black py-4 rounded-xl shadow-xl transition-all duration-300 text-base flex items-center justify-center gap-2 uppercase tracking-wide border-2 cursor-pointer ${
+                  contactForm.paymentMode === 'upi'
+                    ? 'bg-amber-400 hover:bg-amber-300 text-slate-950 border-amber-500 shadow-amber-400/30'
+                    : contactForm.paymentMode === 'card'
+                    ? 'bg-blue-600 hover:bg-blue-500 text-white border-blue-700 shadow-blue-600/30'
+                    : 'bg-emerald-500 hover:bg-emerald-400 text-slate-950 border-emerald-600 shadow-emerald-500/30'
+                }`}
               >
-                {loading ? <Loader2 className="w-6 h-6 animate-spin" /> : <PartyPopper className="w-6 h-6" />}
+                {loading ? (
+                  <Loader2 className="w-6 h-6 animate-spin" />
+                ) : (
+                  <>
+                    <PartyPopper className={`w-6 h-6 ${contactForm.paymentMode === 'card' ? 'text-white' : 'text-slate-950'}`} />
+                    <span>Confirm Event Booking (Pay ₹{grandTotal})</span>
+                  </>
+                )}
               </button>
             </form>
           )}

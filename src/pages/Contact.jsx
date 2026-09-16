@@ -90,7 +90,7 @@ export default function Contact({ onOpenOrder, onOpenCallback }) {
     setError(null);
 
     try {
-      const res = await fetch('/api/enquiries', {
+      const res = await fetch('/api/contact', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData)
@@ -102,7 +102,8 @@ export default function Contact({ onOpenOrder, onOpenCallback }) {
         setError(data.message || 'Error sending message.');
       }
     } catch (err) {
-      setSubmitted(true);
+      console.error('Contact enquiry error:', err);
+      setError('Could not connect to server. Please try again.');
     } finally {
       setLoading(false);
     }

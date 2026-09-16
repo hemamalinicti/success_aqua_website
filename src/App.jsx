@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import FloatingWidgets from './components/FloatingWidgets';
 import OrderModal from './components/OrderModal';
 import CallbackModal from './components/CallbackModal';
+import UserAuthModal from './components/UserAuthModal';
 import WaterDropletsBackground from './components/WaterDropletsBackground';
 
 import Home from './pages/Home';
@@ -11,20 +12,48 @@ import About from './pages/About';
 import Products from './pages/Products';
 import EventBooking from './pages/EventBooking';
 import Contact from './pages/Contact';
+import AdminDashboard from './pages/AdminDashboard';
+import MyOrders from './pages/MyOrders';
 
 export default function App() {
   const [activeTab, setActiveTab] = useState('home');
   const [isOrderOpen, setIsOrderOpen] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState('20 Litre Premium Water Can (Filled)');
   const [isCallbackOpen, setIsCallbackOpen] = useState(false);
+  
+  // User Authentication State
+  const [currentUser, setCurrentUser] = useState(null);
+  const [isAuthOpen, setIsAuthOpen] = useState(false);
+
+  useEffect(() => {
+    const storedUser = localStorage.getItem('customerUser');
+    if (storedUser) {
+      try {
+        setCurrentUser(JSON.parse(storedUser));
+      } catch (e) {
+        console.error('Failed to parse customerUser:', e);
+      }
+    }
+  }, []);
 
   const handleOpenOrder = (productName = '20 Litre Premium Water Can (Filled)') => {
-    setSelectedProduct(productName);
-    setIsOrderOpen(true);
+    if (!currentUser) {
+      setIsAuthOpen(true);
+    } else {
+      setSelectedProduct(productName);
+      setIsOrderOpen(true);
+    }
   };
 
   const handleOpenCallback = () => {
     setIsCallbackOpen(true);
+  };
+
+  const handleUserLogout = () => {
+    localStorage.removeItem('customerToken');
+    localStorage.removeItem('customerUser');
+    setCurrentUser(null);
+    setActiveTab('home');
   };
 
   return (
@@ -38,6 +67,9 @@ export default function App() {
         setActiveTab={setActiveTab} 
         onOpenOrder={handleOpenOrder}
         onOpenCallback={handleOpenCallback}
+        currentUser={currentUser}
+        onOpenAuth={() => setIsAuthOpen(true)}
+        onLogout={handleUserLogout}
       />
 
       {/* Main Content View Switcher */}
@@ -73,6 +105,16 @@ export default function App() {
             onOpenCallback={handleOpenCallback} 
           />
         )}
+        {activeTab === 'my-orders' && (
+          <MyOrders 
+            user={currentUser}
+            onOpenOrder={handleOpenOrder}
+            onRequireAuth={() => setIsAuthOpen(true)}
+          />
+        )}
+        {activeTab === 'admin' && (
+          <AdminDashboard />
+        )}
       </main>
 
       {/* Persistent Footer */}
@@ -92,11 +134,26 @@ export default function App() {
         isOpen={isOrderOpen} 
         onClose={() => setIsOrderOpen(false)} 
         selectedProductDefault={selectedProduct}
+        currentUser={currentUser}
+        onRequireAuth={() => {
+          setIsOrderOpen(false);
+          setIsAuthOpen(true);
+        }}
       />
 
       <CallbackModal 
         isOpen={isCallbackOpen} 
         onClose={() => setIsCallbackOpen(false)} 
+      />
+
+      <UserAuthModal
+        isOpen={isAuthOpen}
+        onClose={() => setIsAuthOpen(false)}
+        onSuccess={(user) => {
+          setCurrentUser(user);
+          setIsAuthOpen(false);
+          setIsOrderOpen(true);
+        }}
       />
 
     </div>

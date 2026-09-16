@@ -9,42 +9,42 @@ export default function Gallery({ onOpenOrder }) {
       id: 1,
       title: '7-Stage Reverse Osmosis Unit',
       category: 'plant',
-      image: 'https://images.unsplash.com/photo-1548839140-29a749e1bc4e?auto=format&fit=crop&q=80&w=800',
+      image: '/images/step-2-carbon.jpg',
       desc: 'High capacity stainless steel RO membranes processing 25,000L daily.'
     },
     {
       id: 2,
       title: 'Automated 5-Step Can Washing Line',
       category: 'bottling',
-      image: 'https://images.unsplash.com/photo-1602143407151-7111542de6e8?auto=format&fit=crop&q=80&w=800',
+      image: '/images/step-6-ozone.jpg',
       desc: 'Machine washing cans with 80°C hot water and ozonated spray.'
     },
     {
       id: 3,
       title: 'NABL Certified Water Testing Lab',
       category: 'quality',
-      image: 'https://images.unsplash.com/photo-1579154204601-01588f351e67?auto=format&fit=crop&q=80&w=800',
+      image: '/images/purity-glass.jpg',
       desc: 'Daily TDS, pH, and microbiological batch inspection.'
     },
     {
       id: 4,
       title: 'Fast Express Delivery Fleet',
       category: 'fleet',
-      image: 'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&q=80&w=800',
+      image: '/images/event-bulk-cans.jpg',
       desc: 'Dedicated delivery vehicles for express doorstep service.'
     },
     {
       id: 5,
       title: 'Corporate Client Pantry Installation',
       category: 'clients',
-      image: 'https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&q=80&w=800',
+      image: '/images/can-tap-dispenser.png',
       desc: '20L water cans installed with automatic USB dispenser pumps.'
     },
     {
       id: 6,
       title: '1L Bottle Packaging & Sealing',
       category: 'bottling',
-      image: 'https://images.unsplash.com/photo-1559839734-2b71ea197ec2?auto=format&fit=crop&q=80&w=800',
+      image: '/images/products-hero.jpg',
       desc: 'Hygienic touchless bottling for events and conferences.'
     }
   ];

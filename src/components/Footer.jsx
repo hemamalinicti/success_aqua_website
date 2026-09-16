@@ -1,7 +1,9 @@
-import React from 'react';
-import { Droplets, Phone, Mail, MapPin, ShieldCheck, Clock, Award, ArrowUpRight, Building2 } from 'lucide-react';
+import React, { useState } from 'react';
+import { Droplets, Phone, Mail, MapPin, ShieldCheck, Clock, Award, ArrowUpRight, Building2, X, FileText, Truck, Shield } from 'lucide-react';
 
 export default function Footer({ setActiveTab, onOpenOrder, onOpenCallback }) {
+  const [activeModal, setActiveModal] = useState(null);
+
   const handleLink = (tab) => {
     setActiveTab(tab);
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -108,14 +110,138 @@ export default function Footer({ setActiveTab, onOpenOrder, onOpenCallback }) {
 
         {/* Bottom copyright */}
         <div className="pt-8 flex flex-col md:flex-row justify-between items-center text-xs text-slate-500 gap-4">
-          <p>© {new Date().getFullYear()} Suvarna Traders - Success Aqua Green. GSTIN: 33CAHPP5553L1ZB. Prepared by Hemamalini S (CodeThrive Infotech).</p>
-          <div className="flex gap-6">
-            <span className="hover:text-slate-400 cursor-pointer">Privacy Policy</span>
-            <span className="hover:text-slate-400 cursor-pointer">Terms of Delivery</span>
-            <span className="hover:text-slate-400 cursor-pointer">GST Invoice Terms</span>
+          <p>© {new Date().getFullYear()} Suvarna Traders - Success Aqua Green. GSTIN: 33CAHPP5553L1ZB.</p>
+          <div className="flex flex-wrap gap-6 items-center">
+            <button 
+              onClick={() => setActiveModal('privacy')}
+              className="hover:text-cyanGlow-300 transition cursor-pointer text-left"
+            >
+              Privacy Policy
+            </button>
+            <button 
+              onClick={() => setActiveModal('delivery')}
+              className="hover:text-cyanGlow-300 transition cursor-pointer text-left"
+            >
+              Terms of Delivery
+            </button>
+            <button 
+              onClick={() => setActiveModal('gst')}
+              className="hover:text-cyanGlow-300 transition cursor-pointer text-left"
+            >
+              GST Invoice Terms
+            </button>
+            <button 
+              onClick={() => handleLink('admin')}
+              className="hover:text-slate-300 transition cursor-pointer text-left text-slate-600 font-mono text-[11px]"
+              title="Suvarna Traders Admin Login"
+            >
+              🔒 Staff Login
+            </button>
           </div>
         </div>
       </div>
+
+      {/* Policy & Terms Modal */}
+      {activeModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-sm animate-fadeIn">
+          <div className="bg-slate-900 border border-slate-800 rounded-2xl max-w-2xl w-full p-6 text-slate-200 shadow-2xl relative max-h-[85vh] overflow-y-auto">
+            <button
+              onClick={() => setActiveModal(null)}
+              className="absolute top-4 right-4 text-slate-400 hover:text-white p-2 rounded-lg bg-slate-800/50 hover:bg-slate-800 transition"
+              aria-label="Close modal"
+            >
+              <X className="w-5 h-5" />
+            </button>
+
+            {activeModal === 'privacy' && (
+              <div>
+                <div className="flex items-center gap-3 mb-4 text-cyanGlow-400">
+                  <Shield className="w-6 h-6" />
+                  <h3 className="text-xl font-bold text-white">Privacy Policy</h3>
+                </div>
+                <div className="space-y-4 text-sm leading-relaxed text-slate-300">
+                  <p>
+                    <strong>Suvarna Traders (Success Aqua Green)</strong> values your trust and is committed to protecting your privacy and personal data.
+                  </p>
+                  <div>
+                    <h4 className="font-semibold text-white mb-1">1. Information We Collect</h4>
+                    <p className="text-slate-400">We collect basic customer information such as name, phone number, delivery address, and order requirements strictly to process packaged drinking water deliveries and handle callback inquiries.</p>
+                  </div>
+                  <div>
+                    <h4 className="font-semibold text-white mb-1">2. Data Usage & Protection</h4>
+                    <p className="text-slate-400">Your details are used solely for order processing, logistics coordination across Coimbatore, and generating GST invoices. We do not sell, rent, trade, or share customer data with third parties.</p>
+                  </div>
+                  <div>
+                    <h4 className="font-semibold text-white mb-1">3. Customer Support Contact</h4>
+                    <p className="text-slate-400">If you have any questions regarding your data or wish to update your records, contact us at <strong>sarveshenterprises2020@gmail.com</strong> or call <strong>+91 99949 19151</strong>.</p>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {activeModal === 'delivery' && (
+              <div>
+                <div className="flex items-center gap-3 mb-4 text-cyanGlow-400">
+                  <Truck className="w-6 h-6" />
+                  <h3 className="text-xl font-bold text-white">Terms of Delivery</h3>
+                </div>
+                <div className="space-y-4 text-sm leading-relaxed text-slate-300">
+                  <p>
+                    Delivery service rules and scheduling policy for <strong>Suvarna Traders - Success Aqua Green</strong> packaged water products across Coimbatore.
+                  </p>
+                  <div>
+                    <h4 className="font-semibold text-white mb-1">1. Delivery Zones & Timings</h4>
+                    <p className="text-slate-400">We supply water cans & bottles across Sungam, RS Puram, Gandhipuram, Peelamedu, Singanallur, and surrounding Coimbatore regions. Standard delivery window is <strong>8:00 AM to 8:00 PM</strong> daily.</p>
+                  </div>
+                  <div>
+                    <h4 className="font-semibold text-white mb-1">2. Returnable 20L Water Can Deposit</h4>
+                    <p className="text-slate-400">20 Litre water cans are supplied on a returnable empty-can exchange basis. First-time customers without an empty can are required to pay an initial refundable can deposit.</p>
+                  </div>
+                  <div>
+                    <h4 className="font-semibold text-white mb-1">3. Mass Event & Corporate Dispatch</h4>
+                    <p className="text-slate-400">For weddings, marriage halls, corporate events, and bulk bottle orders (300ml, 500ml, 1L, 2L cartons), advance booking (24–48 hours) is recommended to ensure guaranteed timely delivery.</p>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {activeModal === 'gst' && (
+              <div>
+                <div className="flex items-center gap-3 mb-4 text-cyanGlow-400">
+                  <Building2 className="w-6 h-6" />
+                  <h3 className="text-xl font-bold text-white">GST Invoice Terms</h3>
+                </div>
+                <div className="space-y-4 text-sm leading-relaxed text-slate-300">
+                  <p>
+                    Tax invoicing guidelines and statutory business registration details for <strong>Suvarna Traders</strong>.
+                  </p>
+                  <div>
+                    <h4 className="font-semibold text-white mb-1">1. GST Registration</h4>
+                    <p className="text-slate-400">Official GSTIN: <strong className="text-cyanGlow-300">33CAHPP5553L1ZB</strong>. Registered business entity: Suvarna Traders (Branch Office, Sungam, Coimbatore).</p>
+                  </div>
+                  <div>
+                    <h4 className="font-semibold text-white mb-1">2. HSN Classification & Tax Rates</h4>
+                    <p className="text-slate-400">Packaged Drinking Water is supplied under HSN Code <strong>2201</strong> with applicable GST (CGST 9% + SGST 9%).</p>
+                  </div>
+                  <div>
+                    <h4 className="font-semibold text-white mb-1">3. Invoice Requests for B2B & Corporate Accounts</h4>
+                    <p className="text-slate-400">Official GST tax invoices are provided for corporate supply contracts, event organizers, and business clients. Provide your GSTIN during order booking for tax credit invoicing.</p>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            <div className="mt-6 pt-4 border-t border-slate-800 flex justify-end">
+              <button
+                onClick={() => setActiveModal(null)}
+                className="px-5 py-2 bg-slate-800 hover:bg-slate-700 text-white rounded-lg text-sm font-medium transition"
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </footer>
   );
 }

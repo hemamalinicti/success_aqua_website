@@ -71,15 +71,15 @@ export default function About({ onOpenOrder, onOpenCallback }) {
           </div>
 
           <div className="lg:col-span-4 flex justify-center">
-            <div className="relative w-48 h-60 sm:w-56 sm:h-68 rounded-2xl overflow-hidden border-4 border-amber-400 shadow-2xl group">
+            <div className="relative w-48 h-60 sm:w-56 sm:h-68 rounded-2xl overflow-hidden border-4 border-amber-400 shadow-2xl group bg-slate-900 flex items-center justify-center p-2">
               <img 
-                src="/images/about-hero.jpg" 
-                alt="Pure Water Splash Showcase" 
-                className="w-full h-full object-cover group-hover:scale-110 transition duration-500"
+                src="/images/can-20l.png" 
+                alt="Pure Water Can 20L Showcase" 
+                className="w-full h-full object-contain group-hover:scale-110 transition duration-500"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-transparent to-transparent p-3 flex flex-col justify-end">
                 <span className="text-[10px] font-black uppercase text-amber-400">Purity Standard</span>
-                <p className="text-xs font-black text-white">Pure & Fresh Hydration</p>
+                <p className="text-xs font-black text-white">Pure & Fresh 20L Hydration</p>
               </div>
             </div>
           </div>
@@ -141,7 +141,7 @@ export default function About({ onOpenOrder, onOpenCallback }) {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <div className="rounded-3xl overflow-hidden border-2 border-slate-200 bg-white shadow-xl relative h-56 group">
             <img 
-              src="https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&q=80&w=800" 
+              src="/images/step-2-carbon.jpg" 
               alt="7-Stage RO Filtration Unit" 
               className="w-full h-full object-cover group-hover:scale-105 transition duration-500"
             />
@@ -153,7 +153,7 @@ export default function About({ onOpenOrder, onOpenCallback }) {
 
           <div className="rounded-3xl overflow-hidden border-2 border-slate-200 bg-white shadow-xl relative h-56 group">
             <img 
-              src="https://images.unsplash.com/photo-1579154204601-01588f351e67?auto=format&fit=crop&q=80&w=800" 
+              src="/images/step-6-ozone.jpg" 
               alt="NABL Quality Testing Lab" 
               className="w-full h-full object-cover group-hover:scale-105 transition duration-500"
             />
@@ -165,8 +165,8 @@ export default function About({ onOpenOrder, onOpenCallback }) {
 
           <div className="rounded-3xl overflow-hidden border-2 border-slate-200 bg-white shadow-xl relative h-56 group">
             <img 
-              src="https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&q=80&w=800" 
-              alt="Express Delivery Truck Fleet" 
+              src="/images/can-lifting-gripper.png" 
+              alt="Express Delivery & Logistics" 
               className="w-full h-full object-cover group-hover:scale-105 transition duration-500"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/30 to-transparent p-4 flex flex-col justify-end text-white">
@@ -177,29 +177,55 @@ export default function About({ onOpenOrder, onOpenCallback }) {
         </div>
       </div>
 
-      {/* MISSION & VISION CARDS - High Contrast Solid Dark Backgrounds with Bold Pure White Text */}
+      {/* MISSION & VISION CARDS - Realistic Image Cover & Interactive Animations */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
         
         {/* Mission Card */}
-        <div className="bg-slate-950 text-white p-8 rounded-3xl shadow-2xl space-y-4 relative overflow-hidden border-2 border-slate-800">
-          <div className="w-14 h-14 rounded-2xl bg-cyan-500 text-slate-950 flex items-center justify-center font-black shadow-md">
-            <Target className="w-8 h-8" />
+        <div className="group bg-slate-950 text-white rounded-3xl shadow-2xl overflow-hidden border-2 border-slate-800 hover:border-cyan-400 hover:-translate-y-2 transition-all duration-500 relative flex flex-col justify-between">
+          <div className="relative h-52 w-full overflow-hidden">
+            <img 
+              src="/images/event-bulk-cans.jpg" 
+              alt="Our Mission - Pure Water Doorstep Delivery" 
+              className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 filter brightness-90"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-transparent"></div>
+            <div className="absolute top-4 left-4 inline-flex items-center gap-2 bg-cyan-500 text-slate-950 font-black text-xs px-3.5 py-1.5 rounded-full shadow-lg">
+              <Target className="w-4 h-4 text-slate-950 animate-bounce" />
+              <span>Core Mission</span>
+            </div>
           </div>
-          <h3 className="text-2xl font-black text-white">Our Mission</h3>
-          <p className="text-slate-100 text-sm font-semibold leading-relaxed">
-            To provide every household, function hall, and enterprise in Coimbatore with affordable, 100% pure, 7-stage purified packaged drinking water (300ml - 20L) through efficient doorstep delivery, uncompromised hygiene, and courteous customer support.
-          </p>
+          <div className="p-8 space-y-3 relative z-10 -mt-6">
+            <h3 className="text-2xl font-black text-white flex items-center gap-2 group-hover:text-cyan-300 transition">
+              Our Mission
+            </h3>
+            <p className="text-slate-200 text-sm font-semibold leading-relaxed">
+              To provide every household, function hall, and enterprise in Coimbatore with affordable, 100% pure, 7-stage purified packaged drinking water (300ml - 20L) through efficient doorstep delivery, uncompromised hygiene, and courteous customer support.
+            </p>
+          </div>
         </div>
 
         {/* Vision Card */}
-        <div className="bg-slate-900 text-white p-8 rounded-3xl shadow-2xl space-y-4 relative overflow-hidden border-2 border-slate-800">
-          <div className="w-14 h-14 rounded-2xl bg-amber-400 text-slate-950 flex items-center justify-center font-black shadow-md">
-            <Eye className="w-8 h-8" />
+        <div className="group bg-slate-950 text-white rounded-3xl shadow-2xl overflow-hidden border-2 border-slate-800 hover:border-amber-400 hover:-translate-y-2 transition-all duration-500 relative flex flex-col justify-between">
+          <div className="relative h-52 w-full overflow-hidden">
+            <img 
+              src="/images/purity-glass.jpg" 
+              alt="Our Vision - Pure Sparkling Water Standards" 
+              className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 filter brightness-90"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-transparent"></div>
+            <div className="absolute top-4 left-4 inline-flex items-center gap-2 bg-amber-400 text-slate-950 font-black text-xs px-3.5 py-1.5 rounded-full shadow-lg">
+              <Eye className="w-4 h-4 text-slate-950 animate-pulse" />
+              <span>Future Vision</span>
+            </div>
           </div>
-          <h3 className="text-2xl font-black text-white">Our Vision</h3>
-          <p className="text-slate-100 text-sm font-semibold leading-relaxed">
-            To become South India's most dependable packaged water supply and empty can manufacturing brand by expanding sustainable bottle recycling initiatives and adopting smart solar-assisted purification technology.
-          </p>
+          <div className="p-8 space-y-3 relative z-10 -mt-6">
+            <h3 className="text-2xl font-black text-white flex items-center gap-2 group-hover:text-amber-300 transition">
+              Our Vision
+            </h3>
+            <p className="text-slate-200 text-sm font-semibold leading-relaxed">
+              To become South India's most dependable packaged water supply and empty can manufacturing brand by expanding sustainable bottle recycling initiatives and adopting smart solar-assisted purification technology.
+            </p>
+          </div>
         </div>
 
       </div>
@@ -216,13 +242,13 @@ export default function About({ onOpenOrder, onOpenCallback }) {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {certifications.map((cert, i) => (
-            <div key={i} className="bg-white p-6 rounded-3xl border-2 border-slate-200 shadow-xl space-y-3 flex flex-col justify-between">
+            <div key={i} className="bg-white p-6 rounded-3xl border-2 border-slate-200 shadow-xl space-y-3 flex flex-col justify-between hover:-translate-y-2 hover:border-cyan-400 hover:shadow-2xl transition-all duration-300 group">
               <div className="space-y-3">
                 <span className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-black border ${cert.badgeColor}`}>
-                  {React.createElement(cert.icon, { className: "w-4 h-4" })}
+                  {React.createElement(cert.icon, { className: "w-4 h-4 group-hover:scale-110 transition" })}
                   {cert.code}
                 </span>
-                <h3 className="font-black text-base text-slate-900">{cert.title}</h3>
+                <h3 className="font-black text-base text-slate-900 group-hover:text-cyan-700 transition">{cert.title}</h3>
                 <p className="text-xs font-bold text-slate-600">{cert.authority}</p>
                 <p className="text-xs text-slate-800 font-medium leading-relaxed">{cert.desc}</p>
               </div>

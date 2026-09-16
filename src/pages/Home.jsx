@@ -42,7 +42,7 @@ export default function Home({ setActiveTab, onOpenOrder, onOpenCallback }) {
       subtitle: 'Most Popular for Homes, Offices & Halls',
       price: '₹80',
       gstNote: '+ 18% GST',
-      tag: 'Bestseller Water',
+      tag: 'Filled Can',
       badgeColor: 'bg-cyan-500 text-slate-950 font-black',
       image: '/images/can-20l.png',
       features: ['7-Stage RO + UV + Ozone', 'Food-grade BPA Free Can', 'Free Doorstep Delivery', 'Tamper Seal Guarantee']
@@ -53,32 +53,32 @@ export default function Home({ setActiveTab, onOpenOrder, onOpenCallback }) {
       subtitle: 'Factory Direct Empty Can Manufacturing',
       price: '₹180',
       gstNote: '+ 18% GST',
-      tag: 'Factory Direct',
+      tag: 'Empty Can',
       badgeColor: 'bg-amber-400 text-slate-950 font-black',
       image: '/images/can-20l.png',
       features: ['100% Virgin Food-Grade PC', 'Reinforced Heavy Weight', 'Standard 55mm Press Neck', '500+ Wash Lifespan']
     },
     {
-      id: 'can-5l',
-      name: '5 Litre Handy Aqua Can (Filled)',
-      subtitle: 'Compact with Built-in Tap',
-      price: '₹45',
+      id: 'can-tap-dispenser',
+      name: 'Fast Flow Can Tap Dispenser',
+      subtitle: 'Food-Grade Dispenser Tap Accessory',
+      price: '₹50',
       gstNote: '+ 18% GST',
-      tag: 'Compact & Handy',
+      tag: 'Dispenser Tap',
       badgeColor: 'bg-emerald-500 text-white font-black',
-      image: '/images/can-5l.png',
-      features: ['5 Litre Easy Carry', 'Built-in Pouring Dispenser Tap', 'Ergonomic Top Handle', 'Ideal for Kitchen & Travel']
+      image: '/images/can-tap-dispenser.png',
+      features: ['Food-Grade Safe Plastic', 'Leak-Proof Silicone Seal', 'Press-to-Flow Operation', 'Fits Standard 20L Water Cans']
     },
     {
-      id: 'bottle-1l',
-      name: '1 Litre Packaged Bottle Carton (12 Pcs)',
-      subtitle: 'Premium Sealed Drinking Water',
-      price: '₹240',
+      id: 'can-lifting-gripper',
+      name: 'Heavy Duty Can Lifting Gripper',
+      subtitle: 'Ergonomic Dual-Hand Carrying Handle',
+      price: '₹70',
       gstNote: '+ 18% GST',
-      tag: 'Events & Functions',
-      badgeColor: 'bg-cyan-600 text-white font-black',
-      image: 'https://images.unsplash.com/photo-1523362628745-0c100150b504?auto=format&fit=crop&q=80&w=800',
-      features: ['12 x 1L Bottles Box', 'Crystal Clear Water', 'Ideal for Marriages & Meets', 'Strict Hygienic Packing']
+      tag: 'Can Gripper',
+      badgeColor: 'bg-purple-600 text-white font-black',
+      image: '/images/can-lifting-gripper.png',
+      features: ['Ergonomic Anti-Slip Grip', 'Reduces Lifting Strain by 50%', 'Heavy Duty Reinforced ABS', 'Fits 20L & 10L Water Cans']
     }
   ];
 

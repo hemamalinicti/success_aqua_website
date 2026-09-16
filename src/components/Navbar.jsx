@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { Droplets, Phone, ShoppingCart, Menu, X, Building2, Clock } from 'lucide-react';
+import { Droplets, Phone, ShoppingCart, Menu, X, Building2, Clock, User, LogOut, PackageCheck } from 'lucide-react';
 
-export default function Navbar({ activeTab, setActiveTab, onOpenOrder, onOpenCallback }) {
+export default function Navbar({ activeTab, setActiveTab, onOpenOrder, onOpenCallback, currentUser, onOpenAuth, onLogout }) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const navItems = [
@@ -10,6 +10,7 @@ export default function Navbar({ activeTab, setActiveTab, onOpenOrder, onOpenCal
     { id: 'products', label: 'Products & Sizes' },
     { id: 'event-booking', label: 'Mass Event Booking' },
     { id: 'contact', label: 'Contact Us & Sungam Hub' },
+    { id: 'my-orders', label: '📦 Track My Orders' },
   ];
 
   const handleNavClick = (id) => {
@@ -86,7 +87,7 @@ export default function Navbar({ activeTab, setActiveTab, onOpenOrder, onOpenCal
                 <button
                   key={item.id}
                   onClick={() => handleNavClick(item.id)}
-                  className={`px-4 py-2 rounded-full text-xs font-black transition-all duration-200 ${
+                  className={`px-3.5 py-2 rounded-full text-xs font-black transition-all duration-200 ${
                     isActive
                       ? 'bg-cyan-500 text-slate-950 shadow-md scale-105'
                       : 'text-slate-100 hover:text-white hover:bg-slate-800'
@@ -98,15 +99,44 @@ export default function Navbar({ activeTab, setActiveTab, onOpenOrder, onOpenCal
             })}
           </nav>
 
-          {/* Desktop CTA Action Button */}
-          <div className="hidden sm:flex items-center gap-3">
+          {/* Desktop Right Action Buttons (Order Cans + Sign In on far right) */}
+          <div className="hidden sm:flex items-center gap-2">
             <button
               onClick={() => onOpenOrder()}
-              className="bg-amber-400 hover:bg-amber-300 text-slate-950 font-black px-5 py-2.5 rounded-full shadow-lg hover:scale-105 transition-all duration-200 flex items-center gap-2 text-xs sm:text-sm cursor-pointer"
+              className="bg-amber-400 hover:bg-amber-300 text-slate-950 font-black px-3.5 py-1.5 rounded-full shadow-md hover:scale-105 transition-all duration-200 flex items-center gap-1.5 text-xs cursor-pointer"
             >
-              <ShoppingCart className="w-4 h-4" />
-              Order Cans / Bottles
+              <ShoppingCart className="w-3.5 h-3.5" />
+              Order Cans
             </button>
+
+            {activeTab !== 'admin' && (
+              currentUser ? (
+                <div className="flex items-center gap-1.5 bg-slate-900 border border-slate-700 p-1 rounded-full">
+                  <button
+                    onClick={() => handleNavClick('my-orders')}
+                    className="px-3 py-1 rounded-full text-xs font-bold text-cyanGlow-300 hover:text-white flex items-center gap-1 transition"
+                  >
+                    <User className="w-3.5 h-3.5 text-cyanGlow-400" />
+                    <span>{currentUser.name.split(' ')[0]}</span>
+                  </button>
+                  <button
+                    onClick={onLogout}
+                    className="px-2 py-0.5 bg-slate-800 hover:bg-rose-500/20 hover:text-rose-300 text-slate-400 rounded-full text-[11px] font-semibold transition"
+                    title="Sign Out"
+                  >
+                    Sign Out
+                  </button>
+                </div>
+              ) : (
+                <button
+                  onClick={onOpenAuth}
+                  className="bg-slate-900 hover:bg-slate-800 text-cyanGlow-300 border border-cyanGlow-500/40 font-bold px-3.5 py-1.5 rounded-full shadow-sm hover:scale-105 transition-all duration-200 flex items-center gap-1.5 text-xs cursor-pointer"
+                >
+                  <User className="w-3.5 h-3.5 text-cyanGlow-400" />
+                  Sign In
+                </button>
+              )
+            )}
           </div>
 
           {/* Mobile Right Action Bar */}
@@ -117,6 +147,14 @@ export default function Navbar({ activeTab, setActiveTab, onOpenOrder, onOpenCal
             >
               <ShoppingCart className="w-3.5 h-3.5 text-slate-950" /> Order
             </button>
+            {!currentUser && activeTab !== 'admin' && (
+              <button
+                onClick={onOpenAuth}
+                className="bg-cyan-500/10 border border-cyan-500/30 text-cyan-300 px-2.5 py-1.5 rounded-xl text-xs font-bold flex items-center gap-1 cursor-pointer"
+              >
+                <User className="w-3.5 h-3.5 text-cyan-400" /> Sign In
+              </button>
+            )}
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               className="p-2 rounded-xl text-white hover:bg-slate-800 focus:outline-none cursor-pointer"
